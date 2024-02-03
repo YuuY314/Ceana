@@ -1,4 +1,4 @@
-const { Client, IntentsBitField } = require("discord.js");
+const { Client, IntentsBitField, EmbedBuilder, Embed } = require("discord.js");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -33,6 +33,50 @@ client.on("interactionCreate", (interaction) => {
         const num2 = interaction.options.get("segundo-numero")?.value;
         
         interaction.reply(`A soma dá ${num1+num2}`);
+    }
+
+    if(interaction.commandName === "embed"){
+        const embed = new EmbedBuilder()
+            .setTitle("Título")
+            .setDescription("Descrição")
+            .setColor("Random")
+            .addFields(
+                {
+                    name: "Campo 1",
+                    value: "Texto campo 1",
+                    inline: true,
+                },
+                {
+                    name: "Campo 2",
+                    value: "Texto campo 2",
+                    inline: true,
+                },
+            );
+
+        interaction.reply({ embeds: [embed] });
+    }
+});
+
+client.on("messageCreate", (message) => {
+    if(message.content === "embed"){
+        const embed = new EmbedBuilder()
+            .setTitle("Título")
+            .setDescription("Descrição")
+            .setColor("Random")
+            .addFields(
+                {
+                    name: "Campo 1",
+                    value: "Texto campo 1",
+                    inline: true,
+                },
+                {
+                    name: "Campo 2",
+                    value: "Texto campo 2",
+                    inline: true,
+                },
+            );
+        
+        message.channel.send({ embeds: [embed] });
     }
 });
 

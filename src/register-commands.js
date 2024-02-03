@@ -44,6 +44,10 @@ const commands = [
                 required: true,
             }
         ]
+    },
+    {
+        name: "embed",
+        description: "Envia uma mensagem embed",
     }
 ];
 
@@ -53,7 +57,7 @@ const rest = new REST({version: "10"}).setToken(TOKEN);
     try {
         console.log(`Registrando ${commands.length} comandos...`);
 
-        await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {body: commands});
+        await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {body: commands} );
         
         console.log("Registrados com sucesso!");
     } catch(error) {
