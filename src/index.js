@@ -1,4 +1,4 @@
-const { Client, IntentsBitField, EmbedBuilder, Embed } = require("discord.js");
+const { Client, IntentsBitField, EmbedBuilder, ActivityType } = require("discord.js");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -13,8 +13,32 @@ const client =  new Client({
     ],
 });
 
+let status = [
+    {
+        name: "Estou às suas ordens",
+        type: ActivityType.Custom,
+    },
+    {
+        name: "palavras ao vento",
+        // default sendo Playing
+    },
+    {
+        name: "o sol nascer",
+        type: ActivityType.Watching,
+    },
+    {
+        name: "uma música calma",
+        type: ActivityType.Listening,
+    },
+];
+
 client.on("ready", (c) => {
     console.log(`Eu sou ${c.user.username} e estou online`);
+
+    setInterval(() => {
+        let random = Math.floor(Math.random() * status.length);
+        client.user.setActivity(status[random]);
+    }, 30000)
 });
 
 client.on("interactionCreate", async (interaction) => {
