@@ -22,8 +22,17 @@ client.on("interactionCreate", (interaction) => {
 
     if(interaction.commandName === "hey"){
         interaction.reply("hey");
-    } else if(interaction.commandName === "ping"){
+    }
+    
+    if(interaction.commandName === "ping"){
         interaction.reply("pong");
+    }
+
+    if(interaction.commandName === "soma"){
+        const num1 = interaction.options.get("primeiro-numero")?.value;
+        const num2 = interaction.options.get("segundo-numero")?.value;
+        
+        interaction.reply(`A soma dá ${num1+num2}`);
     }
 });
 
