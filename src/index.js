@@ -17,13 +17,13 @@ client.on("ready", (c) => {
     console.log(`Eu sou ${c.user.username} e estou online`);
 });
 
-client.on("messageCreate", (message) => {
-    if(message.author.bot){
-        return;
-    }
-    
-    if(message.content === "olá"){
-        message.reply(`olá ${message.author}`);
+client.on("interactionCreate", (interaction) => {
+    if(!interaction.isChatInputCommand()) return;
+
+    if(interaction.commandName === "hey"){
+        interaction.reply("hey");
+    } else if(interaction.commandName === "ping"){
+        interaction.reply("pong");
     }
 });
 
