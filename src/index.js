@@ -17,7 +17,32 @@ client.on("ready", (c) => {
     console.log(`Eu sou ${c.user.username} e estou online`);
 });
 
-client.on("interactionCreate", (interaction) => {
+client.on("interactionCreate", async (interaction) => {
+    try {
+        if(interaction.isButton()){
+            await interaction.deferReply({ ephemeral: true });
+            const role = interaction.guild.roles.cache.get(interaction.customId);
+            if(!role){
+                interaction.editReply({
+                    content: "Não achei esse cargo",
+                });
+                return;
+            }
+    
+            const hasRole = interaction.member.roles.cache.has(role.id);
+            if(hasRole){
+                await interaction.member.roles.remove(role);
+                await interaction.editReply(`O cargo ${role} foi removido`);
+                return;
+            }
+    
+            await interaction.member.roles.add(role);
+            await interaction.editReply(`O cargo ${role} foi adicionado`);
+        }
+    } catch (error) {
+        console.log(`Houve um erro: ${error}`);
+    }
+
     if(!interaction.isChatInputCommand()) return;
 
     if(interaction.commandName === "hey"){
